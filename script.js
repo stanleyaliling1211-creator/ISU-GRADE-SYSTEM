@@ -1,10 +1,4 @@
-/**
- * Isabela State University (ISU) Grade & GWA Calculator
- * Script handling campus program dynamic loading, grade calculations, 
- * course entry additions, and official grade conversion.
- */
 
-// ISU Campuses and their corresponding Bachelor Degree Offerings
 const ISU_PROGRAMS = {
   "Echague (Main)": [
     "BS in Agriculture",
@@ -89,8 +83,7 @@ const ISU_PROGRAMS = {
   ]
 };
 
-// ISU 1.00 - 5.00 Grading Scale Mapping Table
-// Standard Percentage to Grade Point Equivalent (1.00 Highest, 5.00 Failed)
+
 function getISUGrade(percentage) {
   if (percentage >= 98) return { grade: 1.00, status: "Passed", remark: "Excellent" };
   if (percentage >= 95) return { grade: 1.25, status: "Passed", remark: "Superior" };
@@ -104,7 +97,7 @@ function getISUGrade(percentage) {
   return { grade: 5.00, status: "Failed", remark: "Failure (Below 75%)" };
 }
 
-// DOM Elements
+
 const campusSelect = document.getElementById("campusSelect");
 const degreeSelect = document.getElementById("degreeSelect");
 const customDegreeGroup = document.getElementById("customDegreeGroup");
@@ -118,12 +111,11 @@ const academicStatusElem = document.getElementById("academicStatus");
 
 let courseCounter = 0;
 
-// Initialize Web App
 document.addEventListener("DOMContentLoaded", () => {
   populateCampuses();
   updatePrograms();
   
-  // Add initial sample rows
+  
   addCourseRow("IT 111", "Introduction to Computing", 3, 92, 90, 94);
   addCourseRow("IT 112", "Computer Programming 1", 3, 88, 91, 89);
   addCourseRow("GE 1", "Understanding the Self", 3, 95, 96, 94);
@@ -131,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
   calculateGWA();
 });
 
-// Event Listeners
+
 campusSelect.addEventListener("change", updatePrograms);
 degreeSelect.addEventListener("change", () => {
   if (degreeSelect.value === "Other") {
@@ -142,7 +134,7 @@ degreeSelect.addEventListener("change", () => {
 });
 addCourseBtn.addEventListener("click", () => addCourseRow());
 
-// Populate ISU Campuses
+
 function populateCampuses() {
   campusSelect.innerHTML = "";
   Object.keys(ISU_PROGRAMS).forEach(campus => {
@@ -153,7 +145,7 @@ function populateCampuses() {
   });
 }
 
-// Update Bachelor Degrees depending on selected Campus
+
 function updatePrograms() {
   const selectedCampus = campusSelect.value;
   const programs = ISU_PROGRAMS[selectedCampus] || [];
@@ -166,7 +158,6 @@ function updatePrograms() {
     degreeSelect.appendChild(option);
   });
   
-  // Add option for custom program
   const otherOption = document.createElement("option");
   otherOption.value = "Other";
   otherOption.textContent = "Other / Custom Program...";
@@ -175,7 +166,7 @@ function updatePrograms() {
   customDegreeGroup.style.display = "none";
 }
 
-// Add New Subject/Course Row to Table
+
 function addCourseRow(code = "", title = "", units = 3, prelim = "", midterm = "", final = "") {
   courseCounter++;
   const rowId = `course-row-${courseCounter}`;
