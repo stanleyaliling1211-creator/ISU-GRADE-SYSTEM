@@ -3,127 +3,161 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Isabela State University (ISU) Grade & GWA Calculator</title>
+  <title>ISU Grade & GWA Calculator</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
   
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800 antialiased p-4 md:p-6">
 
-  <div class="container">
-    <header>
-      <h1>Isabela State University</h1>
-      <p>Official Grade & General Weighted Average (GWA) Calculator</p>
+  <div class="container max-w-5xl mx-auto">
+   
+    <header class="app-header bg-emerald-800 text-white p-6 rounded-xl shadow-md mb-6 text-center">
+      <h1 class="text-2xl md:text-3xl font-bold tracking-wide">Isabela State University</h1>
+      <p class="text-emerald-100 text-sm mt-1">Student Grade & General Weighted Average (GWA) Calculator</p>
     </header>
 
-  
-    <section class="card">
-      <h2>Student Information</h2>
-      <div class="form-grid">
+    
+    <section class="card bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm">
+      <h2 class="card-title text-lg font-bold text-emerald-800 mb-4 pb-2 border-b-2 border-gray-200 flex items-center gap-2">
+        <span>👤</span> Student Information
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="form-group">
-          <label for="studentName">Student Full Name</label>
-          <input type="text" id="studentName" placeholder="Enter student name">
+          <label class="form-label" for="studentName">Full Name</label>
+          <input type="text" id="studentName" class="form-control" placeholder="e.g. Juan Dela Cruz">
         </div>
-        
         <div class="form-group">
-          <label for="studentAge">Age</label>
-          <input type="number" id="studentAge" min="15" max="100" placeholder="e.g. 20">
+          <label class="form-label" for="studentId">Student Number</label>
+          <input type="text" id="studentId" class="form-control" placeholder="e.g. 23-12345" maxlength="8">
         </div>
-
         <div class="form-group">
-          <label for="campusSelect">ISU Campus</label>
-          <select id="campusSelect">
-           
+          <label class="form-label" for="studentAge">Age</label>
+          <input type="number" id="studentAge" class="form-control" placeholder="e.g. 20" min="15" max="99">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="campusSelect">ISU Campus</label>
+          <select id="campusSelect" class="form-control">
+            <option value="">Select Campus</option>
+            <option value="Echague (Main)">Echague (Main)</option>
+            <option value="Cauayan City">Cauayan City</option>
+            <option value="Ilagan">Ilagan</option>
+            <option value="Cabagan">Cabagan</option>
+            <option value="Roxas">Roxas</option>
+            <option value="San Mariano">San Mariano</option>
+            <option value="Angadanan">Angadanan</option>
+            <option value="Echague - Jones">Echague - Jones</option>
+            <option value="Palanan">Palanan</option>
+            <option value="Dinapigue">Dinapigue</option>
           </select>
         </div>
-
-        <div class="form-group">
-          <label for="degreeSelect">Bachelor's Degree Program</label>
-          <select id="degreeSelect">
-       
+        <div class="form-group md:col-span-2">
+          <label class="form-label" for="degreeSelect">Bachelor's Degree Program</label>
+          <select id="degreeSelect" class="form-control">
+            <option value="">Select Degree Program</option>
+            <option value="BS in Information Technology">BS in Information Technology</option>
+            <option value="BS in Computer Science">BS in Computer Science</option>
+            <option value="BS in Agriculture">BS in Agriculture</option>
+            <option value="BS in Civil Engineering">BS in Civil Engineering</option>
+            <option value="BS in Accountancy">BS in Accountancy</option>
+            <option value="BS in Business Administration">BS in Business Administration</option>
+            <option value="BS in Nursing">BS in Nursing</option>
+            <option value="Bachelor of Elementary Education">Bachelor of Elementary Education</option>
+            <option value="Bachelor of Secondary Education">Bachelor of Secondary Education</option>
+            <option value="BS in Criminology">BS in Criminology</option>
           </select>
-        </div>
-
-        <div class="form-group full-width" id="customDegreeGroup" style="display: none;">
-          <label for="customDegreeInput">Specify Degree Program</label>
-          <input type="text" id="customDegreeInput" placeholder="Enter degree program">
         </div>
       </div>
     </section>
 
    
-    <section class="card">
-      <div class="controls-bar">
-        <h2>Academic Subjects & Grades</h2>
-        <div>
-          <button type="button" class="btn btn-primary" id="addCourseBtn">+ Add Course</button>
-          <button type="button" class="btn btn-secondary no-print" onclick="window.print()">Print Report</button>
-        </div>
+    <section class="card bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 pb-2 border-b-2 border-gray-200 gap-2">
+        <h2 class="card-title text-lg font-bold text-emerald-800 m-0 border-none p-0 flex items-center gap-2">
+          <span>📚</span> Course Subjects & Term Grades
+        </h2>
+        <button type="button" id="addCourseBtn" class="btn btn-outline text-xs px-3 py-1.5">+ Add Subject</button>
       </div>
 
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 15%;">Course Code</th>
-              <th style="width: 25%;">Course Description</th>
-              <th style="width: 10%;">Units</th>
-              <th style="width: 10%;">Prelim (30%)</th>
-              <th style="width: 10%;">Midterm (30%)</th>
-              <th style="width: 10%;">Final (40%)</th>
-              <th style="width: 10%;">Final %</th>
-              <th style="width: 10%;">Grade</th>
-              <th style="width: 5%;">Action</th>
-            </tr>
-          </thead>
-          <tbody id="coursesTableBody">
-          
-          </tbody>
-        </table>
-      </div>
-    </section>
+      <p class="text-xs text-gray-500 mb-4">
+        Note: Final Grade is computed using <strong>30% Prelim</strong>, <strong>30% Midterm</strong>, and <strong>40% Finals</strong>. Grading scale: 1.00 is highest, 5.00 is failing.
+      </p>
 
   
-    <section class="card">
-      <h2>Academic Performance Summary</h2>
-      <div class="results-container">
-        <div class="result-box">
-          <h3>Total Enrolled Units</h3>
-          <div class="value" id="totalUnits">0</div>
-        </div>
-
-        <div class="result-box gwa-highlight">
-          <h3>Calculated GWA</h3>
-          <div class="value" id="gwaValue">0.00</div>
-        </div>
-
-        <div class="result-box">
-          <h3>Academic Standing</h3>
-          <div style="margin-top: 10px;">
-            <span class="badge badge-warning" id="academicStatus">Enter Grades</span>
-          </div>
-        </div>
+      <div id="coursesContainer" class="space-y-4">
+        
       </div>
     </section>
 
     
-    <section class="card no-print">
-      <h2>ISU Official Grading Scale Reference</h2>
-      <div class="grading-scale">
-        <div class="scale-item"><span>98 - 100%</span> <strong>1.00</strong></div>
-        <div class="scale-item"><span>95 - 97%</span> <strong>1.25</strong></div>
-        <div class="scale-item"><span>92 - 94%</span> <strong>1.50</strong></div>
-        <div class="scale-item"><span>89 - 91%</span> <strong>1.75</strong></div>
-        <div class="scale-item"><span>86 - 88%</span> <strong>2.00</strong></div>
-        <div class="scale-item"><span>83 - 85%</span> <strong>2.25</strong></div>
-        <div class="scale-item"><span>80 - 82%</span> <strong>2.50</strong></div>
-        <div class="scale-item"><span>77 - 79%</span> <strong>2.75</strong></div>
-        <div class="scale-item"><span>75 - 76%</span> <strong>3.00</strong></div>
-        <div class="scale-item" style="color: var(--danger);"><span>Below 75%</span> <strong>5.00</strong></div>
+    <section class="card bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm no-print">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex flex-wrap items-center gap-6 text-center md:text-left">
+          <div>
+            <span class="text-xs font-semibold text-gray-500 block uppercase">Total Units</span>
+            <span id="totalUnitsDisplay" class="text-2xl font-bold text-gray-800">0</span>
+          </div>
+          <div class="border-l border-gray-200 pl-6 hidden md:block"></div>
+          <div>
+            <span class="text-xs font-semibold text-gray-500 block uppercase">General Weighted Average (GWA)</span>
+            <span id="gwaDisplay" class="text-3xl font-extrabold text-emerald-700">0.00</span>
+          </div>
+          <div class="border-l border-gray-200 pl-6 hidden md:block"></div>
+          <div>
+            <span class="text-xs font-semibold text-gray-500 block uppercase mb-1">Academic Status</span>
+            <span id="academicStatusBadge" class="status-badge bg-gray-100 text-gray-700">Pending Calculation</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-3 w-full md:w-auto justify-center">
+          <button type="button" id="calculateBtn" class="btn btn-primary flex-1 md:flex-initial">Calculate GWA</button>
+          <button type="button" id="printBtn" class="btn btn-secondary flex-1 md:flex-initial">Print / Save PDF</button>
+          <button type="button" id="resetFormBtn" class="btn btn-outline text-red-600 border-red-300 hover:bg-red-50 flex-1 md:flex-initial" id="resetBtn">Reset</button>
+        </div>
       </div>
     </section>
+
+   
+    <div id="printSection" class="print-only card bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm">
+      <div class="text-center mb-6 border-b pb-4">
+        <h2 class="text-xl font-bold text-emerald-900">ISABELA STATE UNIVERSITY</h2>
+        <p class="text-sm text-gray-600" id="printCampus">Campus</p>
+        <h3 class="text-md font-semibold mt-2 text-gray-800">OFFICIAL GRADE REPORT SUMMARY</h3>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 mb-6 text-sm">
+        <div><strong>Student Name:</strong> <span id="printName">--</span></div>
+        <div><strong>Student Number:</strong> <span id="printId">--</span></div>
+        <div><strong>Degree Program:</strong> <span id="printDegree">--</span></div>
+        <div><strong>Age:</strong> <span id="printAge">--</span></div>
+      </div>
+
+      <table class="w-full border-collapse mb-6">
+        <thead>
+          <tr class="bg-gray-100 text-xs uppercase text-gray-600 text-left">
+            <th class="py-2 px-3 border-b">Subject Code</th>
+            <th class="py-2 px-3 border-b text-center">Units</th>
+            <th class="py-2 px-3 border-b text-center">Prelim</th>
+            <th class="py-2 px-3 border-b text-center">Midterm</th>
+            <th class="py-2 px-3 border-b text-center">Finals</th>
+            <th class="py-2 px-3 border-b text-center">Grade</th>
+            <th class="py-2 px-3 border-b text-center">Remarks</th>
+          </tr>
+        </thead>
+        <tbody id="printTableBody" class="text-sm">
+         
+        </tbody>
+      </table>
+
+      <div class="flex justify-between items-center pt-4 border-t text-sm font-semibold">
+        <div>General Weighted Average (GWA): <span id="printGWA" class="text-lg font-bold text-emerald-800">0.00</span></div>
+        <div>Standing: <span id="printStatus">--</span></div>
+      </div>
+    </div>
   </div>
 
-  <!-- Link external JavaScript file -->
+  
   <script src="script.js"></script>
 </body>
 </html>
